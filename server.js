@@ -27,7 +27,9 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 });
-
+app.use('/test',(req,res)=>{
+  res.send("i am working")
+})
 server.listen(8000, () => {
   console.log('Server is running on port 8000');
 });
