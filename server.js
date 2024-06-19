@@ -10,6 +10,7 @@ const app = express();
 app.use(cors({
   origin: 'http://localhost:3003',
   credentials: true,
+  methods:['GET','POST'],
   optionsSuccessStatus: 204, 
 }));
 const server = http.createServer(app);
