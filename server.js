@@ -9,11 +9,13 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "*",
+    origin:["http://localhost:3003","http://192.168.0.87:3003"],
     methods: ["GET", "POST"]
   }
 });
-
+app.use('/',(req,res)=>{
+  res.send("hello india")
+})
 io.on('connection', (socket) => {
   console.log('New user connected:', socket.id);
 
