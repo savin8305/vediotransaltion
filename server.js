@@ -5,6 +5,13 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = express();
+const cors = require("cors");
+
+app.use(cors({
+  origin: 'http://localhost:3003',
+  credentials: true,
+  optionsSuccessStatus: 204, // 204 No Content is a common choice
+}));
 const server = http.createServer(app);
 const io = socketIo(server);
 
