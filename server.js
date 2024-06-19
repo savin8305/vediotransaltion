@@ -13,9 +13,7 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
-app.use('/',(req,res)=>{
-  res.send("hello india")
-})
+
 io.on('connection', (socket) => {
   console.log('New user connected:', socket.id);
 
@@ -38,7 +36,9 @@ io.on('connection', (socket) => {
     console.log('User disconnected:', socket.id);
   });
 });
-
+app.use('/test',(req,res)=>{
+  res.send("hello india")
+})
 server.listen(5000, () => {
   console.log('Server is running on port 5000');
 });
