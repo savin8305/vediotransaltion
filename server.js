@@ -1,20 +1,22 @@
-// server.js
-
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
-const cors = require("cors");
+const cors = require('cors');
 
 const app = express();
-
 app.use(cors({
-  origin: 'http://localhost:3003',
-  credentials: true,
-  methods:['GET','POST'],
-  optionsSuccessStatus: 204, 
+  origin: 'http://localhost:3003', // Allow your React app's URL
+  methods: ['GET', 'POST'],
+  credentials: true
 }));
+
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3003",
+    methods: ["GET", "POST"]
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('New user connected');
@@ -35,9 +37,7 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 });
-app.use('/test',(req,res)=>{
-  res.send("i am working")
-})
-server.listen(8000, () => {
-  console.log('Server is running on port 8000');
+
+server.listen(5000, () => {
+  console.log('Server is running on port 5000');
 });
