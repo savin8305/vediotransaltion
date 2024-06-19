@@ -4,37 +4,36 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({
-  origin: 'http://localhost:3003', // Allow your React app's URL
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+app.use(cors());
 
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3003",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
 
 io.on('connection', (socket) => {
-  console.log('New user connected');
+  console.log('New user connected:', socket.id);
 
-  socket.on('offer', (offer) => {
-    socket.broadcast.emit('offer', offer);
+  socket.on('offer', (data) => {
+    console.log('Offer received:', data);
+    socket.broadcast.emit('offer', data);
   });
 
-  socket.on('answer', (answer) => {
-    socket.broadcast.emit('answer', answer);
+  socket.on('answer', (data) => {
+    console.log('Answer received:', data);
+    socket.broadcast.emit('answer', data);
   });
 
-  socket.on('ice-candidate', (candidate) => {
-    socket.broadcast.emit('ice-candidate', candidate);
+  socket.on('ice-candidate', (data) => {
+    console.log('ICE Candidate received:', data);
+    socket.broadcast.emit('ice-candidate', data);
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    console.log('User disconnected:', socket.id);
   });
 });
 
